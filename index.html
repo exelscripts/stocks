@@ -3,139 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BestStocks</title>
+<title>Clean GUI Template</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-.container {
-    width: 500px;
-    background: #252525;
-    border: 2px solid #4da6ff;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 0 20px rgba(77, 166, 255, 0.3);
-    text-align: center;
-}
+    body {
+        height: 100vh;
+        background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #5fd0ff;
+    }
 
-h1 {
-    color: #4da6ff;
-}
+    .container {
+        width: 900px;
+        height: 550px;
+        background: rgba(40, 40, 40, 0.9);
+        border-radius: 25px;
+        border: 2px solid #5fd0ff;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 40px rgba(95, 208, 255, 0.15);
+        display: flex;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease-in-out;
+    }
 
-.stock-list {
-    margin-top: 20px;
-    border: 2px solid #4da6ff;
-    border-radius: 15px;
-    padding: 15px;
-    background: #1e1e1e;
-    text-align: left;
-}
+    .sidebar {
+        width: 220px;
+        background: rgba(30, 30, 30, 0.95);
+        border-right: 2px solid #5fd0ff;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 
-.stock-item {
-    padding: 10px;
-    border-bottom: 1px solid #333;
-}
+    .logo {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-.stock-item:last-child {
-    border-bottom: none;
-}
+    .nav-btn {
+        padding: 12px;
+        border-radius: 15px;
+        border: 2px solid #5fd0ff;
+        background: transparent;
+        color: #5fd0ff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-.positive { color: #4da6ff; font-weight: bold; }
-.negative { color: #ff4d4d; font-weight: bold; }
+    .nav-btn:hover {
+        background: #5fd0ff;
+        color: #1e1e1e;
+        transform: translateY(-3px);
+        box-shadow: 0 0 15px #5fd0ff;
+    }
 
-.small-text {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #aaa;
-}
+    .main {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .card {
+        background: rgba(50, 50, 50, 0.8);
+        border: 2px solid #5fd0ff;
+        border-radius: 20px;
+        padding: 25px;
+        transition: 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px rgba(95, 208, 255, 0.25);
+    }
+
+    .primary-btn {
+        width: 160px;
+        padding: 12px;
+        border-radius: 20px;
+        border: none;
+        background: #5fd0ff;
+        color: #1e1e1e;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .primary-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #5fd0ff;
+    }
+
+    input {
+        padding: 12px;
+        border-radius: 15px;
+        border: 2px solid #5fd0ff;
+        background: transparent;
+        color: #5fd0ff;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    input:focus {
+        box-shadow: 0 0 15px rgba(95, 208, 255, 0.4);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>BestStocks</h1>
-    <div class="stock-list" id="stockList">
-        Loading stocks...
+
+    <div class="sidebar">
+        <div class="logo">My GUI</div>
+        <button class="nav-btn">Dashboard</button>
+        <button class="nav-btn">Features</button>
+        <button class="nav-btn">Settings</button>
+        <button class="nav-btn">Profile</button>
     </div>
-    <div class="small-text">
-        Updates every 60 seconds (Alpha Vantage Free Tier: 5 requests/min)
+
+    <div class="main">
+        <div class="card">
+            <h2>Welcome</h2>
+            <p>This is your clean, modern GUI layout.</p>
+        </div>
+
+        <div class="card">
+            <h3>Example Input</h3>
+            <input type="text" placeholder="Type something...">
+            <br><br>
+            <button class="primary-btn">Submit</button>
+        </div>
     </div>
+
 </div>
-
-<script>
-const API_KEY = "SE3RGXNO85QQTUKC";
-
-// Stocks to scan
-const symbols = ["AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "GOOGL", "META", "AMD", "NFLX", "SPY"];
-
-async function fetchStock(symbol) {
-    const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const quote = data["Global Quote"];
-    if (!quote || !quote["05. price"]) return null;
-
-    return {
-        symbol: quote["01. symbol"],
-        price: parseFloat(quote["05. price"]),
-        changePercent: parseFloat(quote["10. change percent"].replace('%',''))
-    };
-}
-
-async function fetchTopStocks() {
-    const stockList = document.getElementById("stockList");
-    stockList.innerHTML = "Updating...";
-
-    let results = [];
-
-    for (let symbol of symbols) {
-        try {
-            const stock = await fetchStock(symbol);
-            if (stock) results.push(stock);
-
-            // Respect free tier rate limit (5 per minute)
-            await new Promise(r => setTimeout(r, 12000));
-        } catch (e) {
-            console.log("Error fetching", symbol);
-        }
-    }
-
-    results.sort((a, b) => b.changePercent - a.changePercent);
-    const top5 = results.slice(0, 5);
-
-    stockList.innerHTML = "";
-
-    top5.forEach(stock => {
-        const div = document.createElement("div");
-        div.className = "stock-item";
-        div.innerHTML = `
-            <strong>${stock.symbol}</strong><br>
-            Price: $${stock.price.toFixed(2)}<br>
-            Change: <span class="${stock.changePercent >= 0 ? 'positive' : 'negative'}">
-                ${stock.changePercent.toFixed(2)}%
-            </span>
-        `;
-        stockList.appendChild(div);
-    });
-}
-
-// Initial load
-fetchTopStocks();
-
-// Auto update every 60 seconds
-setInterval(fetchTopStocks, 60000);
-</script>
 
 </body>
 </html>
