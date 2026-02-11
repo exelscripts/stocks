@@ -3,137 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clean GUI Template</title>
+<title>BestStocks</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-        height: 100vh;
-        background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #5fd0ff;
-    }
-
-    .container {
-        width: 900px;
-        height: 550px;
-        background: rgba(40, 40, 40, 0.9);
-        border-radius: 25px;
-        border: 2px solid #5fd0ff;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 40px rgba(95, 208, 255, 0.15);
-        display: flex;
-        overflow: hidden;
-        animation: fadeIn 0.8s ease-in-out;
-    }
-
-    .sidebar {
-        width: 220px;
-        background: rgba(30, 30, 30, 0.95);
-        border-right: 2px solid #5fd0ff;
-        padding: 25px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .logo {
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .nav-btn {
-        padding: 12px;
-        border-radius: 15px;
-        border: 2px solid #5fd0ff;
-        background: transparent;
-        color: #5fd0ff;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .nav-btn:hover {
-        background: #5fd0ff;
-        color: #1e1e1e;
-        transform: translateY(-3px);
-        box-shadow: 0 0 15px #5fd0ff;
-    }
-
-    .main {
-        flex: 1;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .card {
-        background: rgba(50, 50, 50, 0.8);
-        border: 2px solid #5fd0ff;
-        border-radius: 20px;
-        padding: 25px;
-        transition: 0.3s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0 20px rgba(95, 208, 255, 0.25);
-    }
-
-    .primary-btn {
-        width: 160px;
-        padding: 12px;
-        border-radius: 20px;
-        border: none;
-        background: #5fd0ff;
-        color: #1e1e1e;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .primary-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px #5fd0ff;
-    }
-
-    input {
-        padding: 12px;
-        border-radius: 15px;
-        border: 2px solid #5fd0ff;
-        background: transparent;
-        color: #5fd0ff;
-        outline: none;
-        transition: 0.3s;
-    }
-
-    input:focus {
-        box-shadow: 0 0 15px rgba(95, 208, 255, 0.4);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #1e1e1e; color: #5fd0ff; }
+.container { width: 1000px; background: rgba(40,40,40,0.95); border-radius: 25px; border: 2px solid #5fd0ff; box-shadow: 0 0 40px rgba(95,208,255,0.15); display: flex; overflow: hidden; }
+.sidebar { width: 220px; background: rgba(30,30,30,0.95); border-right: 2px solid #5fd0ff; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+.logo { font-size: 22px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+.nav-btn, .primary-btn, .buy-btn { padding: 12px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+.nav-btn { background: transparent; border: 2px solid #5fd0ff; color: #5fd0ff; }
+.nav-btn:hover { background: #5fd0ff; color: #1e1e1e; }
+.main { flex: 1; padding: 40px; display: flex; flex-direction: column; gap: 20px; }
+.card { background: rgba(50,50,50,0.8); border: 2px solid #5fd0ff; border-radius: 20px; padding: 25px; }
+.primary-btn, .buy-btn { background: #5fd0ff; color: #1e1e1e; }
+.primary-btn:hover, .buy-btn:hover { transform: scale(1.05); }
+.stock-item { margin-bottom: 25px; padding: 15px; border: 1px solid #5fd0ff; border-radius: 15px; }
+.stock-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.percentage { font-weight: bold; }
+.positive { color: #00ff88; }
+.negative { color: #ff4d4d; }
+canvas { margin-top: 10px; }
 </style>
 </head>
 
 <body>
-
 <div class="container">
-
     <div class="sidebar">
-        <div class="logo">My GUI</div>
+        <div class="logo">BestStocks</div>
         <button class="nav-btn">Dashboard</button>
         <button class="nav-btn">Features</button>
         <button class="nav-btn">Settings</button>
@@ -143,18 +41,108 @@
     <div class="main">
         <div class="card">
             <h2>Welcome</h2>
-            <p>This is your clean, modern GUI layout.</p>
+            <p>Find best stocks for you!</p>
         </div>
 
-        <div class="card">
-            <h3>Example Input</h3>
-            <input type="text" placeholder="Type something...">
-            <br><br>
-            <button class="primary-btn">Submit</button>
+        <div class="card" style="display:flex; gap:30px; justify-content:center;">
+            <button class="primary-btn" id="btn10">£10-£50</button>
+            <button class="primary-btn" id="btn50">£50+</button>
         </div>
+
+        <div class="card" id="results" style="display:none;"></div>
     </div>
-
 </div>
 
+<script>
+// Mock free stock data simulating live search results
+const stocks10 = [
+    {symbol: 'HSBC', price: 32, history: [31,32,32.5,31.8,32.1,32,32.2]},
+    {symbol: 'BP', price: 28, history: [27.5,28,28.2,27.8,28.1,28,28.3]},
+    {symbol: 'BARC', price: 45, history: [44,45,44.8,45.2,45,45,45.1]}
+];
+
+const stocks50 = [
+    {symbol: 'AAPL', price: 145, history:[140,142,144,143,145,146,145]},
+    {symbol: 'MSFT', price: 210, history:[205,208,210,209,210,211,210]},
+    {symbol: 'NVDA', price: 320, history:[310,315,318,320,322,321,320]}
+];
+
+function animateCounter(element, target) {
+    let start = 0;
+    const duration = 800;
+    const increment = target / (duration/16);
+    function update(){
+        start+=increment;
+        if(Math.abs(start)>=Math.abs(target)){ element.textContent = target.toFixed(2)+'%'; return; }
+        element.textContent = start.toFixed(2)+'%';
+        requestAnimationFrame(update);
+    }
+    update();
+}
+
+function loadStocks(stockArray){
+    const results = document.getElementById('results');
+    results.innerHTML = '';
+    results.style.display='block';
+
+    stockArray.forEach(stock=>{
+        const div = document.createElement('div');
+        div.className='stock-item';
+        const changePercent = ((stock.price - stock.history[0])/stock.history[0])*100;
+        const id = stock.symbol;
+        div.innerHTML=`
+            <div class='stock-header'>
+                <span>${stock.symbol} (£${stock.price.toFixed(2)})</span>
+                <span class='percentage ${changePercent>=0?'positive':'negative'}' id='percent-${id}'>0%</span>
+            </div>
+            <button class='buy-btn' onclick='buyStock("${id}")'>Buy</button>
+            <canvas id='chart-${id}' height='80'></canvas>
+        `;
+        results.appendChild(div);
+        animateCounter(document.getElementById(`percent-${id}`), changePercent);
+
+        new Chart(document.getElementById(`chart-${id}`),{
+            type:'line',
+            data:{ labels:['1','2','3','4','5','6','7'], datasets:[{data: stock.history, borderColor:'#5fd0ff', tension:0.4}]},
+            options:{ plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{display:false}} }
+        });
+    });
+}
+
+function buyStock(symbol){
+    // Redirect to a stock marketplace search for the symbol
+    const url = `https://www.google.com/search?q=buy+${symbol}+stock`;
+    window.open(url, '_blank');
+}
+
+document.getElementById('btn10').onclick=()=>loadStocks(stocks10);
+document.getElementById('btn50').onclick=()=>loadStocks(stocks50);
+
+// Auto-refresh live prices every 30 seconds
+setInterval(()=>{
+    const displayedStocks = document.getElementById('results').children;
+    for(let i=0;i<displayedStocks.length;i++){
+        const canvas = displayedStocks[i].querySelector('canvas');
+        const id = canvas.id.replace('chart-','');
+        const stockArray = stocks10.concat(stocks50).filter(s=>s.symbol===id);
+        if(stockArray.length>0){
+            const stock = stockArray[0];
+            const newPrice = stock.price*(0.98+Math.random()*0.04);
+            stock.price=newPrice;
+            const changePercent = ((stock.price-stock.history[0])/stock.history[0])*100;
+            const percentEl = displayedStocks[i].querySelector('.percentage');
+            animateCounter(percentEl, changePercent);
+
+            const chart = Chart.getChart(canvas);
+            if(chart){
+                stock.history.push(newPrice);
+                if(stock.history.length>7) stock.history.shift();
+                chart.data.datasets[0].data = stock.history;
+                chart.update();
+            }
+        }
+    }
+}, 30000);
+</script>
 </body>
 </html>
