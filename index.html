@@ -8,198 +8,226 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{min-height:100vh;display:flex;justify-content:center;align-items:center;background:#1e1e1e;color:#5fd0ff}
-.container{width:1250px;min-height:750px;background:rgba(40,40,40,.95);border-radius:35px;border:2px solid #5fd0ff;box-shadow:0 0 60px rgba(95,208,255,.3);display:flex;overflow:hidden;animation:fadeIn .8s ease}
+.container{width:1250px;min-height:750px;background:rgba(40,40,40,.95);border-radius:35px;border:2px solid #5fd0ff;box-shadow:0 0 60px rgba(95,208,255,.3);display:flex;overflow:hidden}
 .sidebar{width:250px;background:rgba(30,30,30,.95);border-right:2px solid #5fd0ff;padding:30px;display:flex;flex-direction:column;gap:20px}
 .logo{font-size:22px;font-weight:bold;margin-bottom:20px;text-align:center}
-.nav-btn,.primary-btn,.buy-btn,.edit-btn,.close-btn{border:none;padding:14px 22px;border-radius:50px;font-weight:bold;cursor:pointer;transition:.3s ease;font-size:15px}
+.nav-btn,.primary-btn,.buy-btn,.edit-btn{border:none;padding:14px 22px;border-radius:50px;font-weight:bold;cursor:pointer;transition:.3s ease;font-size:15px}
 .nav-btn{background:transparent;border:2px solid #5fd0ff;color:#5fd0ff}
+.nav-btn.active{background:#5fd0ff;color:#1e1e1e;box-shadow:0 0 20px rgba(95,208,255,.8),0 0 40px rgba(95,208,255,.4)}
 .nav-btn:hover{background:#5fd0ff;color:#1e1e1e}
-.main{flex:1;padding:60px;display:flex;flex-direction:column;gap:40px;position:relative}
-.card{background:rgba(50,50,50,.85);border:2px solid #5fd0ff;border-radius:25px;padding:30px;position:relative;margin-bottom:10px;box-shadow:0 0 25px rgba(95,208,255,.15);transition:all .4s ease;animation:slideUp .6s ease}
-.card:hover{box-shadow:0 0 35px rgba(95,208,255,.35);transform:translateY(-5px)}
-.primary-btn,.buy-btn,.edit-btn,.close-btn{background:#5fd0ff;color:#1e1e1e}
-.primary-btn:hover,.buy-btn:hover,.edit-btn:hover,.close-btn:hover{transform:scale(1.05)}
-.stock-item{margin-bottom:35px;padding:20px;border:1px solid #5fd0ff;border-radius:18px;transition:all .3s ease}
-.stock-item:hover{box-shadow:0 0 20px rgba(95,208,255,.3);transform:scale(1.02)}
+.primary-btn,.buy-btn,.edit-btn{background:#5fd0ff;color:#1e1e1e}
+.range-btn.active{animation:glowPulse 1.5s infinite alternate}
+@keyframes glowPulse{from{box-shadow:0 0 10px rgba(95,208,255,.6)}to{box-shadow:0 0 25px rgba(95,208,255,1),0 0 45px rgba(95,208,255,.8)}}
+#dashboardSignOut{background:#ff4d4d;color:#fff;margin-top:auto}
+#dashboardSignOut:hover{background:#ff1a1a}
+.main{flex:1;padding:60px;position:relative}
+.section{position:absolute;top:0;left:0;width:100%;opacity:0;transform:translateY(20px);transition:opacity .4s ease, transform .4s ease;pointer-events:none}
+.section.active{opacity:1;transform:translateY(0);pointer-events:auto;position:relative}
+.card{background:rgba(50,50,50,.85);border:2px solid #5fd0ff;border-radius:25px;padding:30px;margin-bottom:30px}
+.stock-item{margin-bottom:25px;padding:20px;border:1px solid #5fd0ff;border-radius:18px}
 .stock-header{display:flex;justify-content:space-between;margin-bottom:10px}
-.percentage{font-weight:bold}
-.positive{color:#00ff88}
-canvas{margin-top:10px}
-#profileSection{display:none}
 #loginPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#1e1e1e;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:1000}
-#loginBtn{border-radius:20px;background:#5fd0ff;color:#1e1e1e;border:none;padding:12px 25px;margin-top:20px;font-weight:bold;cursor:pointer;transition:.3s}
-#loginBtn:hover{transform:scale(1.05)}
-#editUsernameInput{display:none;padding:10px;margin-left:10px;border-radius:15px;border:none}
-#closeProfileBtn{position:absolute;top:15px;right:15px}
-#dashboardSignOut{background:#ff4d4d;color:white;border:none;padding:14px 22px;border-radius:50px;font-weight:bold;cursor:pointer;transition:.3s;margin-top:auto}
-#dashboardSignOut:hover{background:#ff1a1a;transform:scale(1.05)}
-#dashboardSignOut:hover{background:#ff1a1a;transform:scale(1.05)}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-h2{animation:fadeIn 1s ease}
-p{animation:fadeIn 1.3s ease}
-
-
-/* Mobile Responsive */
-@media (max-width: 900px){
-.container{width:95%;min-height:auto;flex-direction:column;border-radius:25px}
-.sidebar{width:100%;flex-direction:row;justify-content:space-around;align-items:center;border-right:none;border-bottom:2px solid #5fd0ff;padding:15px}
+#loginBtn{background:#5fd0ff;color:#1e1e1e;border:none;padding:12px 25px;margin-top:20px;border-radius:50px;font-weight:bold;cursor:pointer}
+@media (max-width:900px){
+.container{width:95%;flex-direction:column}
+.sidebar{width:100%;flex-direction:row;justify-content:space-around;border-right:none;border-bottom:2px solid #5fd0ff}
 .logo{display:none}
-#dashboardSignOut{margin-top:0}
-.main{padding:25px;gap:25px}
-.card{padding:20px}
-.stock-header{flex-direction:column;gap:8px}
-}
-
-@media (max-width: 500px){
-.nav-btn,#dashboardSignOut{padding:10px 14px;font-size:13px}
-.primary-btn{padding:10px 16px;font-size:13px}
 }
 </style>
 </head>
 <body>
+
 <div id="loginPage">
 <h2>Login to BestStocks</h2>
-<input type="text" id="usernameInput" placeholder="Enter your username" style="padding:12px;border-radius:15px;border:none;margin-top:15px;width:220px;text-align:center"/>
+<input type="text" id="usernameInput" placeholder="Enter your username" style="padding:12px;border-radius:20px;border:none;margin-top:15px;width:220px;text-align:center"/>
 <button id="loginBtn">Login</button>
 </div>
-<div class="container" style="display:none" id="mainContainer">
+
+<div class="container" id="mainContainer" style="display:none">
 <div class="sidebar">
 <div class="logo">BestStocks</div>
 <button class="nav-btn" id="dashboardBtn">Dashboard</button>
+<button class="nav-btn" id="predictionsBtn">Predictions</button>
 <button class="nav-btn" id="profileBtn">Profile</button>
-<button id="dashboardSignOut">Sign Out</button>
+<button class="nav-btn" id="dashboardSignOut">Sign Out</button>
 </div>
-<div class="main" id="mainContent">
-<div id="dashboardSection">
-<div class="card"><h2>Welcome to BestStocks</h2><p>Find rising stocks for you</p></div>
+
+<div class="main">
+
+<div id="dashboardSection" class="section active">
+<div class="card">
+<h2>Welcome to BestStocks</h2>
+<p>Find rising stocks for you</p>
+</div>
 <div class="card" style="display:flex;gap:30px;justify-content:center">
 <button class="primary-btn" id="btn10">£10-£50</button>
 <button class="primary-btn" id="btn50">£50+</button>
 </div>
 <div class="card" id="results" style="display:none"></div>
 </div>
-<div id="profileSection" class="card">
+
+<div id="predictionsSection" class="section">
+<div class="card">
+<h2>Stock Predictions</h2>
+<p style="margin:15px 0">Recently dropped stocks (potential rebounds)</p>
+<div style="display:flex;flex-wrap:wrap;gap:15px;margin-bottom:15px">
+<button class="primary-btn range-btn" data-min="0" data-max="5">Under £5</button>
+<button class="primary-btn range-btn" data-min="5" data-max="10">£5-£10</button>
+<button class="primary-btn range-btn" data-min="10" data-max="20">£10-£20</button>
+<button class="primary-btn range-btn" data-min="20" data-max="50">£20-£50</button>
+<button class="primary-btn range-btn" data-min="50" data-max="1000">£50+</button>
+</div>
+<div id="predictionResults" style="margin-top:20px"></div>
+</div>
+</div>
+
+<div id="profileSection" class="section">
+<div class="card">
 <span id="usernameDisplay">Username</span>
-<input type="text" id="editUsernameInput"/>
+<input type="text" id="editUsernameInput" style="display:none;margin-left:10px;padding:8px;border-radius:15px;border:none"/>
 <button class="edit-btn" id="editUsernameBtn">Edit</button>
+</div>
+</div>
 
-<button class="close-btn" id="closeProfileBtn">X</button>
 </div>
 </div>
-</div>
+
 <script>
-let username=localStorage.getItem('beststocks_username')||'';
+let username = localStorage.getItem('beststocks_username') || '';
 
-document.getElementById('loginBtn').onclick=()=>{
-const input=document.getElementById('usernameInput').value.trim();
-username=input||'User';
-localStorage.setItem('beststocks_username',username);
-document.getElementById('usernameDisplay').textContent=username;
-document.getElementById('loginPage').style.display='none';
-document.getElementById('mainContainer').style.display='flex';
+const loginBtn = document.getElementById('loginBtn');
+const dashboardBtn = document.getElementById('dashboardBtn');
+const profileBtn = document.getElementById('profileBtn');
+const predictionsBtn = document.getElementById('predictionsBtn');
+const signOutBtn = document.getElementById('dashboardSignOut');
+
+const dashboardSection = document.getElementById('dashboardSection');
+const profileSection = document.getElementById('profileSection');
+const predictionsSection = document.getElementById('predictionsSection');
+
+function switchSection(section,button){
+dashboardSection.classList.remove('active');
+profileSection.classList.remove('active');
+predictionsSection.classList.remove('active');
+dashboardBtn.classList.remove('active');
+predictionsBtn.classList.remove('active');
+profileBtn.classList.remove('active');
+section.classList.add('active');
+if(button) button.classList.add('active');
+}
+
+loginBtn.onclick = () => {
+const input = document.getElementById('usernameInput').value.trim();
+username = input || 'User';
+localStorage.setItem('beststocks_username', username);
+document.getElementById('usernameDisplay').textContent = username;
+document.getElementById('loginPage').style.display = 'none';
+document.getElementById('mainContainer').style.display = 'flex';
 };
 
-const dashboardBtn=document.getElementById('dashboardBtn');
-const profileBtn=document.getElementById('profileBtn');
-const profileSection=document.getElementById('profileSection');
-const dashboardSection=document.getElementById('dashboardSection');
-const closeProfileBtn=document.getElementById('closeProfileBtn');
-const editUsernameBtn=document.getElementById('editUsernameBtn');
-const usernameDisplay=document.getElementById('usernameDisplay');
-const editUsernameInput=document.getElementById('editUsernameInput');
-const signOutBtn=document.getElementById('dashboardSignOut');
+if(username){
+document.getElementById('usernameDisplay').textContent = username;
+document.getElementById('loginPage').style.display = 'none';
+document.getElementById('mainContainer').style.display = 'flex';
+}
 
-profileBtn.onclick=()=>{dashboardSection.style.display='none';profileSection.style.display='block';editUsernameInput.value=username};
-dashboardBtn.onclick=()=>{profileSection.style.display='none';dashboardSection.style.display='block'};
-closeProfileBtn.onclick=()=>{profileSection.style.display='none';dashboardSection.style.display='block'};
+dashboardBtn.onclick = () => switchSection(dashboardSection,dashboardBtn);
+predictionsBtn.onclick = () => switchSection(predictionsSection,predictionsBtn);
+profileBtn.onclick = () => {
+document.getElementById('editUsernameInput').value = username;
+switchSection(profileSection,profileBtn);
+};
 
-editUsernameBtn.onclick=()=>{
-if(editUsernameInput.style.display==='none'){
-editUsernameInput.style.display='inline';
-editUsernameInput.focus();
-editUsernameBtn.textContent='Save';
-}else{
-const newName=editUsernameInput.value.trim();
+editUsernameBtn.onclick = () => {
+const input = document.getElementById('editUsernameInput');
+if(input.style.display === 'none'){
+input.style.display = 'inline';
+editUsernameBtn.textContent = 'Save';
+} else {
+const newName = input.value.trim();
 if(newName){
-username=newName;
-usernameDisplay.textContent=username;
-localStorage.setItem('beststocks_username',username);
+username = newName;
+document.getElementById('usernameDisplay').textContent = username;
+localStorage.setItem('beststocks_username', username);
 }
-editUsernameInput.style.display='none';
-editUsernameBtn.textContent='Edit';
+input.style.display = 'none';
+editUsernameBtn.textContent = 'Edit';
 }
 };
 
-signOutBtn.onclick=()=>{
-username='';
+signOutBtn.onclick = () => {
 localStorage.removeItem('beststocks_username');
-document.getElementById('usernameInput').value='';
+username = '';
 document.getElementById('mainContainer').style.display='none';
 document.getElementById('loginPage').style.display='flex';
-profileSection.style.display='none';
-dashboardSection.style.display='block';
 };
 
-// Auto-login if saved
-if(username){
-document.getElementById('usernameDisplay').textContent=username;
-document.getElementById('loginPage').style.display='none';
-document.getElementById('mainContainer').style.display='flex';
-}
-
-const API_KEY='d66dlihr01qnh6sdg03gd66dlihr01qnh6sdg040';
+const API_KEY = 'd66dlihr01qnh6sdg03gd66dlihr01qnh6sdg040';
 
 async function fetchAllSymbols(){
-const res=await fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${API_KEY}`);
-const data=await res.json();
-return data.slice(0,100).map(s=>s.symbol);
+try{
+const res = await fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${API_KEY}`);
+const data = await res.json();
+if(Array.isArray(data)){
+return data.slice(0,200).map(s=>s.symbol).filter(Boolean);
+}
+console.error('Unexpected symbol response format', data);
+return [];
+}catch(err){
+console.error('Symbol fetch failed', err);
+return [];
+}
 }
 
 async function fetchStock(symbol){
 try{
-const res=await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
-const data=await res.json();
-if(!data||typeof data.c!=='number'||typeof data.o!=='number')return null;
-const change=((data.c-data.o)/data.o)*100;
-if(change<=0)return null;
-return{symbol,price:data.c,change,history:Array(7).fill(data.c)};
+const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+const data = await res.json();
+if(!data || typeof data.c !== 'number' || typeof data.o !== 'number') return null;
+const change = ((data.c - data.o) / data.o) * 100;
+return {symbol, price:data.c, change};
 }catch{return null}
 }
 
-async function loadStocks(min,max){
-const results=document.getElementById('results');
-results.innerHTML='Loading...';
-results.style.display='block';
+async function runPrediction(min,max){
+const predictionResults=document.getElementById('predictionResults');
+predictionResults.innerHTML='Analyzing...';
 
 const symbols=await fetchAllSymbols();
-const shuffled=symbols.sort(()=>0.5-Math.random()).slice(0,20);
+if(symbols.length===0){predictionResults.innerHTML='No symbols available.';return}
 
-const stocks=await Promise.all(shuffled.map(s=>fetchStock(s)));
+const shuffled=symbols.sort(()=>0.5-Math.random()).slice(0,50);
+const stocks=await Promise.all(shuffled.map(fetchStock));
 
-const filtered=stocks.filter(s=>s&&s.price>=min&&(max? s.price<=max:true));
+const picks=stocks
+.filter(s=>s && s.price>=min && s.price<=max && s.change<0)
+.sort((a,b)=>a.change-b.change)
+.slice(0,5);
 
-results.innerHTML='';
+predictionResults.innerHTML='';
 
-if(filtered.length===0){results.innerHTML='No rising stocks found in this range.';return}
+if(picks.length===0){predictionResults.innerHTML='No recently dropped stocks found in this range.';return}
 
-filtered.forEach(stock=>{
+picks.forEach(stock=>{
 const div=document.createElement('div');
 div.className='stock-item';
-div.innerHTML=`<div class='stock-header'><span>${stock.symbol} (£${stock.price.toFixed(2)})</span><span class='percentage positive'>${stock.change.toFixed(2)}%</span></div><button class='buy-btn' onclick='buyStock("${stock.symbol}")'>Buy</button><canvas id='chart-${stock.symbol}' height='80'></canvas>`;
-results.appendChild(div);
-new Chart(document.getElementById(`chart-${stock.symbol}`),{
-type:'line',
-data:{labels:['1','2','3','4','5','6','7'],datasets:[{data:stock.history,borderColor:'#5fd0ff',tension:.4}]},
-options:{plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}}}
-});
+div.innerHTML=`<div class='stock-header'><span>${stock.symbol} (£${stock.price.toFixed(2)})</span><span style='color:#ff4d4d;font-weight:bold'>${stock.change.toFixed(2)}%</span></div>`;
+predictionResults.appendChild(div);
 });
 }
 
-function buyStock(symbol){window.open(`https://www.google.com/search?q=buy+${symbol}+stock`,'_blank')}
+// Range selection auto-run
 
-document.getElementById('btn10').onclick=()=>loadStocks(10,50);
-document.getElementById('btn50').onclick=()=>loadStocks(50,null);
+document.querySelectorAll('.range-btn').forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+const min=parseFloat(btn.dataset.min);
+const max=parseFloat(btn.dataset.max);
+runPrediction(min,max);
+};
+});
+
 </script>
 </body>
 </html>
