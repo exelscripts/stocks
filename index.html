@@ -38,6 +38,23 @@ canvas{margin-top:10px}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 h2{animation:fadeIn 1s ease}
 p{animation:fadeIn 1.3s ease}
+
+
+/* Mobile Responsive */
+@media (max-width: 900px){
+.container{width:95%;min-height:auto;flex-direction:column;border-radius:25px}
+.sidebar{width:100%;flex-direction:row;justify-content:space-around;align-items:center;border-right:none;border-bottom:2px solid #5fd0ff;padding:15px}
+.logo{display:none}
+#dashboardSignOut{margin-top:0}
+.main{padding:25px;gap:25px}
+.card{padding:20px}
+.stock-header{flex-direction:column;gap:8px}
+}
+
+@media (max-width: 500px){
+.nav-btn,#dashboardSignOut{padding:10px 14px;font-size:13px}
+.primary-btn{padding:10px 16px;font-size:13px}
+}
 </style>
 </head>
 <body>
